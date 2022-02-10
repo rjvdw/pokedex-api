@@ -1,6 +1,6 @@
 # pokedex-api
 
-The backend for rjvdw/pokedex
+The backend for [rjvdw/pokedex](https://github.com/rjvdw/pokedex).
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
 
