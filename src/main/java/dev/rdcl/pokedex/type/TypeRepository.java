@@ -1,7 +1,5 @@
-package dev.rdcl.pokedex;
+package dev.rdcl.pokedex.type;
 
-import dev.rdcl.pokedex.entities.TypeEntity;
-import dev.rdcl.pokedex.exceptions.TypeNotFound;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;

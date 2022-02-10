@@ -1,10 +1,10 @@
-package dev.rdcl.pokedex;
+package dev.rdcl.pokedex.pokemon;
 
-import dev.rdcl.pokedex.converters.PokemonEntityConverter;
-import dev.rdcl.pokedex.entities.PokemonEntity;
+import dev.rdcl.pokedex.type.TypeRepository;
 import lombok.AllArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
+import java.util.List;
 import java.util.Optional;
 
 @ApplicationScoped
@@ -13,6 +13,14 @@ public class PokemonService {
 
     private final PokemonRepository pokemonRepository;
     private final TypeRepository typeRepository;
+
+    public List<Pokemon> getAllPokemon() {
+        return pokemonRepository
+                .findAll()
+                .stream()
+                .map(PokemonEntityConverter::fromEntity)
+                .toList();
+    }
 
     public Optional<Pokemon> getPokemon(int index) {
         return pokemonRepository
@@ -34,11 +42,11 @@ public class PokemonService {
                         .index(pokemon.index())
                         .build());
 
-        var primaryType = typeRepository.getByName(pokemon.primary().name());
+        var primaryType = typeRepository.getByName(pokemon.primary());
 
         var secondaryType = pokemon.secondary() == null
                 ? null
-                : typeRepository.getByName(pokemon.secondary().name());
+                : typeRepository.getByName(pokemon.secondary());
 
         entity.setName(pokemon.name());
         entity.setDescription(pokemon.description());

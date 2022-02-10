@@ -1,7 +1,6 @@
-package dev.rdcl.pokedex.converters;
+package dev.rdcl.pokedex.pokemon;
 
-import dev.rdcl.pokedex.Pokemon;
-import dev.rdcl.pokedex.entities.PokemonEntity;
+import dev.rdcl.pokedex.type.TypeEntityConverter;
 
 public class PokemonEntityConverter {
 

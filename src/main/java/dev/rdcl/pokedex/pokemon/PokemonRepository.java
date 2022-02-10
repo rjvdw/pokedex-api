@@ -1,6 +1,5 @@
-package dev.rdcl.pokedex;
+package dev.rdcl.pokedex.pokemon;
 
-import dev.rdcl.pokedex.entities.PokemonEntity;
 import io.quarkus.hibernate.orm.panache.PanacheRepository;
 
 import javax.enterprise.context.ApplicationScoped;

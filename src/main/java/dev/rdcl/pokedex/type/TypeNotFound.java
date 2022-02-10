@@ -1,4 +1,4 @@
-package dev.rdcl.pokedex.exceptions;
+package dev.rdcl.pokedex.type;
 
 public class TypeNotFound extends RuntimeException {
 
