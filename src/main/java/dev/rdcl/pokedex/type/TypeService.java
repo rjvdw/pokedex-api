@@ -3,6 +3,7 @@ package dev.rdcl.pokedex.type;
 import lombok.AllArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @ApplicationScoped
@@ -11,6 +12,7 @@ public class TypeService {
 
     private final TypeRepository typeRepository;
 
+    @Transactional
     public List<String> getAllTypes() {
         return typeRepository
                 .findAll()

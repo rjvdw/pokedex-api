@@ -4,6 +4,7 @@ import dev.rdcl.pokedex.type.TypeRepository;
 import lombok.AllArgsConstructor;
 
 import javax.enterprise.context.ApplicationScoped;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +15,7 @@ public class PokemonService {
     private final PokemonRepository pokemonRepository;
     private final TypeRepository typeRepository;
 
+    @Transactional
     public List<Pokemon> getAllPokemon() {
         return pokemonRepository
                 .findAll()
@@ -22,18 +24,21 @@ public class PokemonService {
                 .toList();
     }
 
+    @Transactional
     public Optional<Pokemon> getPokemon(int index) {
         return pokemonRepository
                 .findByIndex(index)
                 .map(PokemonEntityConverter::fromEntity);
     }
 
+    @Transactional
     public Optional<Pokemon> getPokemon(String name) {
         return pokemonRepository
                 .findByName(name)
                 .map(PokemonEntityConverter::fromEntity);
     }
 
+    @Transactional
     public void savePokemon(Pokemon pokemon) {
         var entity = pokemonRepository
                 .find("index", pokemon.index())
