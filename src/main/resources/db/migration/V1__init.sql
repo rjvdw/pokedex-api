@@ -1,7 +1,8 @@
 create table type
 (
-    id   bigserial   not null primary key,
-    name varchar(32) not null unique
+    id         bigserial   not null primary key,
+    name       varchar(32) not null unique,
+    sort_order int         not null
 );
 
 create table effectiveness
@@ -15,8 +16,8 @@ create table effectiveness
                        'no effect')),
 
     unique (type, against),
-    foreign key (type) references type (id) on delete restrict,
-    foreign key (against) references type (id) on delete restrict
+    foreign key (type) references type (id) on delete cascade,
+    foreign key (against) references type (id) on delete cascade
 );
 
 create table pokemon

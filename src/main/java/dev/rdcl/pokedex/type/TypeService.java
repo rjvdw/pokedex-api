@@ -60,7 +60,7 @@ public class TypeService {
                 });
 
         return typeRepository
-                .findAll()
+                .findAll(Sort.by("sort_order"))
                 .stream()
                 .map(entity -> {
                     var type = entity.getName();
@@ -90,17 +90,32 @@ public class TypeService {
         // Ensure all types in the chart exist.
         var existingTypes = getExistingTypes();
         var typesToKeep = new HashSet<String>();
-        types.forEach(type -> {
+        for (var i = 0; i < types.size(); i += 1) {
+            var type = types.get(i);
             typesToKeep.add(type);
-            if (!existingTypes.containsKey(type)) {
+            if (existingTypes.containsKey(type)) {
+                var entity = existingTypes.get(type);
+                entity.setSortOrder(i);
+                typeRepository.persist(entity);
+            } else {
                 var entity = TypeEntity.builder()
                         .name(type)
+                        .sortOrder(i)
                         .build();
 
-                typeRepository.persist(entity);
                 existingTypes.put(type, entity);
+                typeRepository.persist(entity);
             }
-        });
+        }
+
+        // Persist the new types.
+        existingTypes
+                .keySet()
+                .stream()
+                .filter(type -> !typesToKeep.contains(type))
+                .forEach(type -> {
+                    typeRepository.delete("name", type);
+                });
 
         // Translate the chart to a list of entities.
         var entities = chartToEntities(chart, existingTypes);
@@ -128,15 +143,6 @@ public class TypeService {
         for (var entity : entitiesToDelete) {
             effectivenessRepository.delete(entity);
         }
-
-        // Delete types that are not in the chart.
-        existingTypes
-                .keySet()
-                .stream()
-                .filter(type -> !typesToKeep.contains(type))
-                .forEach(type -> {
-                    typeRepository.delete("name", type);
-                });
     }
 
     private Map<String, TypeEntity> getExistingTypes() {

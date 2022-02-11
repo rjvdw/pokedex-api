@@ -28,4 +28,7 @@ public class TypeEntity {
     @Column(name = "name", nullable = false, unique = true)
     private String name;
 
+    @Column(name = "sort_order", nullable = false)
+    private int sortOrder;
+
 }
