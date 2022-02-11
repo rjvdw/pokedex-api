@@ -1,4 +1,4 @@
-package dev.rdcl.pokedex.pokemon;
+package dev.rdcl.pokedex.effectiveness;
 
 import dev.rdcl.pokedex.type.TypeEntity;
 import lombok.AllArgsConstructor;
@@ -13,38 +13,37 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
 @Entity
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "pokemon")
-public class PokemonEntity {
+@Table(
+        name = "effectiveness",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"type", "against"}),
+        }
+)
+public class EffectivenessEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "index", nullable = false, unique = true)
-    private int index;
-
-    @Column(name = "name", nullable = false, unique = true)
-    private String name;
-
-    @Column(name = "description", nullable = false)
-    @Lob
-    private String description;
+    @ManyToOne(fetch = FetchType.EAGER, optional = false)
+    @JoinColumn(name = "type", nullable = false)
+    private TypeEntity type;
 
     @ManyToOne(fetch = FetchType.EAGER, optional = false)
-    @JoinColumn(name = "primary_type", nullable = false)
-    private TypeEntity primaryType;
+    @JoinColumn(name = "against", nullable = false)
+    private TypeEntity against;
 
-    @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "secondary_type")
-    private TypeEntity secondaryType;
+    @Column(name = "effect", nullable = false)
+    private String effect;
+
 }

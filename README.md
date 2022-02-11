@@ -13,7 +13,12 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw compile quarkus:dev
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+### Dev UI
+
+Dev UIs can be found at:
+
+* [Quarkus Dev UI - http://localhost:8080/q/dev/](http://localhost:8080/q/dev/)
+* [GraphQL UI - http://localhost:8080/q/graphql-ui/](http://localhost:8080/q/graphql-ui/)
 
 ## Packaging and running the application
 
